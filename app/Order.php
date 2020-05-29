@@ -1,6 +1,6 @@
 <?php
 
-namespace app_hw10;
+namespace app;
 
 class Order
 {

@@ -1,7 +1,7 @@
 <?php
 include 'autoload.php';
 
-use app_hw10\Order;
+use app\Order;
 
 include 'template/form.php';
 
