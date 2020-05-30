@@ -1,5 +1,4 @@
 <?php
-
 namespace app;
 
 class Order
@@ -112,5 +111,9 @@ class Order
         $this->theme = trim(strip_tags(array_get($data, 'theme')));
         $this->payment = trim(strip_tags(array_get($data, 'payment')));
         $this->notif = trim(strip_tags(array_get($data, 'notif')));
+    }
+
+    public function read(){
+
     }
 }

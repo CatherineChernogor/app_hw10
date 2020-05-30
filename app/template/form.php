@@ -9,11 +9,16 @@
 </head>
 
 <body>
-
     <?php if (!empty($successMessage)) : ?>
         <p><?= $successMessage ?></p>
 
     <?php else : ?>
+
+
+        <?php var_dump($errors); ?>
+
+
+
 
         <form method="POST" action="">
             <div class="form-group"><strong>Регистрация на конференцию</strong></div>
@@ -38,9 +43,6 @@
                 <input type="email" name='email' value="<?= isset($_POST['email']) ? $_POST['email'] : '' ?>">
                 <span class="error"><?= isset($errors['email']) ? $errors['email'] : '' ?></span>
             </div>
-
-
-            <?php var_dump($order) ?>
 
             <div class="form-group">
                 <label>Интересующая тематика конференции</label>
