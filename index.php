@@ -1,15 +1,10 @@
 <?php
 
-ini_set('display_errors', 1); 
-ini_set('display_startup_errors', 1); 
-error_reporting(E_ALL);
-
 include 'autoload.php';
 
 use app\Order;
 
 $order = new Order;
-include 'app/template/form.php';
 
 if ($_POST) {
 
@@ -20,6 +15,7 @@ if ($_POST) {
         $successMessage = "Спасибо, ваши данные сохранены";
     } else {
         $errors = $order->getErrors();
-        var_dump($errors);
     }
 }
+
+include 'app/template/form.php';
