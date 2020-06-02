@@ -41,19 +41,27 @@ class Order
             $errors['firstName'] = 'First name is too short, must be at least 2 symbols';
         else if (strlen($this->firstName) > 50)
             $errors['firstName'] = 'First name is too long, must be less that 50 symbols';
+        else if (!preg_match('/^[А-ЯЁ][а-яё]{1,24}$/u', $this->firstName))
+            $errors['firstName'] = 'Incorrect value';
 
         if (empty($this->lastname))
             $errors['lastname'] = 'Last name is required';
         else if (strlen($this->lastname) < 2)
             $errors['lastname'] = 'Last name is too short, must beat least 2 symbol';
         else if (strlen($this->lastname) > 50)
-            $errors['lastname'] = 'LAst name is too long, must be less that 50 symbols';
+            $errors['lastname'] = 'Last name is too long, must be less that 50 symbols';
+        else if (!preg_match('/^[А-ЯЁ]([а-яё\-]){0,24}$/u', $this->lastname))
+            $errors['lastname'] = 'Incorrect value';
 
         if (empty($this->phone))
             $errors['phone'] = 'Phone is required';
+        else if (!preg_match('/^\+7\s?9\d{2}\s?\d{3}\-?\d{2}\-?\d{2}$/', $this->phone))
+            $errors['phone'] = 'Incorrect value';
 
         if (empty($this->email))
             $errors['email'] = 'Email is required';
+        else if (!preg_match('/^[a-zA-Z\d_\-\.]+@[a-z\-]{2,15}\.[a-z]{2,6}$/', $this->email))
+            $errors['email'] = 'Incorrect value';
 
         if (empty($this->theme))
             $errors['theme'] = 'Theme is required';
@@ -92,7 +100,9 @@ class Order
         $content[] = $this->ip;
         $content[] = $this->firstName;
         $content[] = $this->lastname;
-        $content[] = $this->phone;
+        $pattern = '/^\+7\s?(9\d{2})\s?(\d{3})\-?(\d{2})\-?(\d{2})$/';
+        $replacement = '+7 $1 $2-$3-$4';
+        $content[] = preg_replace($pattern, $replacement, $this->phone);
         $content[] = $this->email;
         $content[] = $this->theme;
         $content[] = $this->payment;
@@ -145,7 +155,6 @@ class Order
                 'payment'   => $this->getPayments()[$cols[8]],
                 'notif'     => $cols[9],
             ];
-  
         }
         return $data;
     }
