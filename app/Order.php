@@ -1,4 +1,5 @@
 <?php
+
 namespace app;
 
 class Order
@@ -12,16 +13,20 @@ class Order
     public $payment;
     public $notif;
 
+    protected $id;
+    protected $date;
+    protected $ip;
+
     protected static $themes = [
-        '1' => 'Бизнес',
-        '2' => 'Технологии',
-        '3' => 'Реклама и Маркетинг',
+        1 => 'Бизнес',
+        2 => 'Технологии',
+        3 => 'Реклама и Маркетинг',
     ];
     protected static $payments = [
-        '1' => 'WebMoney',
-        '2' => 'Яндекс.Деньги',
-        '3' => 'PayPal',
-        '4' => 'кредитная карта'
+        1 => 'WebMoney',
+        2 => 'Яндекс.Деньги',
+        3 => 'PayPal',
+        4 => 'кредитная карта'
     ];
 
     protected $errors;
@@ -82,9 +87,9 @@ class Order
     public function save()
     {
         $content = [];
-        $content[] = uniqid();
-        $content[] = date('Y-m-d H:i:s');
-        $content[] = $_SERVER['REMOTE_ADDR'];
+        $content[] = $this->id;
+        $content[] = $this->date;
+        $content[] = $this->ip;
         $content[] = $this->firstName;
         $content[] = $this->lastname;
         $content[] = $this->phone;
@@ -103,7 +108,9 @@ class Order
 
     public function fill($data)
     {
-
+        $this->id = uniqid();
+        $this->date = date('Y-m-d H:i:s');
+        $this->ip = $_SERVER['REMOTE_ADDR'];
         $this->firstName = trim(strip_tags(array_get($data, 'firstName')));
         $this->lastname = trim(strip_tags(array_get($data, 'lastname')));
         $this->phone = trim(strip_tags(array_get($data, 'phone')));
@@ -113,7 +120,33 @@ class Order
         $this->notif = trim(strip_tags(array_get($data, 'notif')));
     }
 
-    public function read(){
+    public function read($filename)
+    {
+        $contents = file_get_contents($filename);
+        $contents = trim($contents);
 
+        $items = explode("\n", $contents);
+
+        $data = [];
+
+        foreach ($items as $item) {
+
+            $item = trim($item);
+            $cols = explode('||', $item);
+
+            $data[$cols[0]] = [
+                'date'      => $cols[1],
+                'ip'        => $cols[2],
+                'firstName' => $cols[3],
+                'lastname'  => $cols[4],
+                'phone'     => $cols[5],
+                'email'     => $cols[6],
+                'theme'     => $this->getThemes()[$cols[7]],
+                'payment'   => $this->getPayments()[$cols[8]],
+                'notif'     => $cols[9],
+            ];
+  
+        }
+        return $data;
     }
 }
