@@ -6,13 +6,19 @@ use app\Order;
 
 $order = new Order;
 
+if (isset($_SESSION['successMessage'])) {
+    $successMessage = $_SESSION['successMessage'];
+    unset($_SESSION['successMessage']);
+}
 if ($_POST) {
 
     $order->fill($_POST);
 
     if ($order->validate() && $order->save()) {
-        
-        $successMessage = "Спасибо, ваши данные сохранены";
+
+        $_SESSION['successMessage'] = "Спасибо, ваши данные сохранены";
+        header('Location: index.php');
+        exit;
     } else {
         $errors = $order->getErrors();
     }
