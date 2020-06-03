@@ -18,8 +18,8 @@
             <div class="form-group"><strong>Регистрация на конференцию</strong></div>
             <div class="form-group">
                 <label>Имя</label>
-                <input type="text" name='firstName' value="<?= htmlspecialchars($_POST['firstName'] ?? '') ?>">
-                <span class="error"><?= $errors['firstName'] ?? '' ?></span>
+                <input type="text" name='firstname' value="<?= htmlspecialchars($_POST['firstname'] ?? '') ?>">
+                <span class="error"><?= $errors['firstname'] ?? '' ?></span>
             </div>
             <div class="form-group">
                 <label>Фамилия</label>
@@ -62,8 +62,8 @@
 
             <div class="form-group">
                 <label>Согласен получать рассылку о конференции</label>
-                <input type="checkbox" name='notif' <?= !empty($_POST['notif']) ? 'checked' : '' ?>>
-                <span class="error"><?= $errors['notif'] ?? '' ?></span>
+                <input type="checkbox" name='mailing' <?= !empty($_POST['mailing']) ? 'checked' : '' ?>>
+                <span class="error"><?= $errors['mailing'] ?? '' ?></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Send">
