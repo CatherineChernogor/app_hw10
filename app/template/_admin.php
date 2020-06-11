@@ -24,11 +24,11 @@
                 <th>Оплата: </th>
                 <th>Согласие на рассылку: </th>
                 <th>Дата регистрации: </th>
-                <th>Дата удаления: </th>
 
             </thead>
             <tbody>
                 <?php foreach ($data as $id => $item) : ?>
+                <?php if (!$item->deleted_at): ?>
                     <tr>
                         <td>
                             <input type="checkbox" name="selected_ids[]" value="<?= $item->id ?>">
@@ -44,9 +44,9 @@
                         <td><?= htmlspecialchars($item->payment) ?></td>
                         <td><?= htmlspecialchars($item->mailing) ?></td>
                         <td><?= htmlspecialchars($item->created_at) ?></td>
-                        <td><?= htmlspecialchars($item->deleted_at) ?></td>
 
                     </tr>
+                    <?php endif ?>
                 <?php endforeach ?>
             </tbody>
         </table>
